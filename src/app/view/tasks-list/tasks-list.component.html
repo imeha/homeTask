@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row col-md-12">
+    <h2 class="text-center">{{recordedTime | hoursMinutesSeconds}}</h2>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
+  </div>
+  
+  <table mdbTable class=" table table-responsive-md text-center" hover="true" small="true" >
+    <thead class="black white-text">
+    <tr >
+      <th *ngFor="let head of headElements; let i = index" aria-controls="tableSortExample" scope="col">{{head | titlecase}} 
+        <i  class=""></i>    
+    </th>    
+    </tr>
+  </thead>
+  <tbody>
+    <tr  *ngFor="let task of tasks | filter:term">
+      <td>
+        <span contenteditable="true" (keyup)="changeValue(id, 'NAME', $event)" (blur)="updateList(task.id, 'name', $event)" contenteditable="true">{{task.name}}</span>
+      </td>
+      <td>
+        <span contenteditable="true" (keyup)="changeValue(id, 'DESCRIPTION', $event)" (blur)="updateList(task.id, 'description', $event)">{{task.description}}</span>
+      </td>
+      <td>
+        <span (keyup)="changeValue(id, 'TIME_SPENT', $event)" (blur)="updateList(task.id, 'time_spent', $event)">{{task.totalSeconds | hoursMinutesSeconds}}</span>
+      </td>
+      <td>
+        <span (keyup)="changeValue(id, 'COMPLETED', $event)" (blur)="updateList(task.id, 'completed', $event)">{{task.completed}}</span>
+      </td>
+      <td>
+        <span class="table-remove">
+          <button type="button" mdbBtn color="primary" rounded="true" size="sm" rounded="true" class="my-0" (click)="deleteTask(task.id)">REMOVE</button>
+        </span>
+      </td>
+      <td>
+        <span class="table-remove">
+          <button type="button" mdbBtn color="primary" rounded="true" size="sm" rounded="true" class="my-0" [disabled]="disableButton(task.id)" (click)="startTimer(task.id)">START</button>
+          <button type="button" mdbBtn color="primary" rounded="true" size="sm" rounded="true" class="my-0" [disabled]="disableButton(task.id)" (click)="pauseTimer()">PAUSE</button>
+          <button type="button" mdbBtn color="primary" rounded="true" size="sm" rounded="true" class="my-0" [disabled]="disableButton(task.id)" (click)="stopTimer(task)">STOP</button>
+  
+        </span>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+</div>
